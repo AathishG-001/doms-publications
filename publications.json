@@ -1,0 +1,26 @@
+[
+  {
+    "title": "NEXUS Management Review — Vol. I",
+    "type": "magazine",
+    "issue": "Vol. I · 2025",
+    "date": "December 2025",
+    "desc": "Human and AI Integration — a deep dive into how management practices are evolving at the intersection of technology and leadership.",
+    "file": "pdfs/nexus-vol1-2025.pdf"
+  },
+  {
+    "title": "DoMS Newsletter — Issue 6",
+    "type": "newsletter",
+    "issue": "Issue 6 · 2025",
+    "date": "November 2025",
+    "desc": "Placement season highlights, alumni spotlight, and upcoming events.",
+    "file": "pdfs/newsletter-6-2025.pdf"
+  },
+  {
+    "title": "DoMS Newsletter — Issue 5",
+    "type": "newsletter",
+    "issue": "Issue 5 · 2025",
+    "date": "September 2025",
+    "desc": "Industry visits, faculty achievements, and student council updates.",
+    "file": "pdfs/newsletter-5-2025.pdf"
+  }
+]

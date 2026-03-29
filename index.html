@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DoMS Publications — NIT Trichy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #1a1a1a;
+      --ink-muted: #6b6b6b;
+      --ink-faint: #b0b0b0;
+      --paper: #f7f4ef;
+      --paper-card: #fdfcfa;
+      --accent: #8b1a1a;
+      --accent-light: #f2e8e8;
+      --border: #e0dbd3;
+      --serif: 'Playfair Display', Georgia, serif;
+      --sans: 'DM Sans', system-ui, sans-serif;
+    }
+
+    body {
+      font-family: var(--sans);
+      background: var(--paper);
+      color: var(--ink);
+      min-height: 100vh;
+    }
+
+    /* MASTHEAD */
+    header {
+      border-bottom: 1px solid var(--border);
+      background: var(--paper-card);
+      padding: 0 2rem;
+    }
+
+    .masthead-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 0 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .masthead-logo {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .logo-mark {
+      width: 44px;
+      height: 44px;
+      background: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+    }
+
+    .logo-mark span {
+      font-family: var(--serif);
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -1px;
+    }
+
+    .logo-text h1 {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.2;
+    }
+
+    .logo-text p {
+      font-size: 0.75rem;
+      color: var(--ink-muted);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-weight: 300;
+      margin-top: 2px;
+    }
+
+    .masthead-meta {
+      font-size: 0.75rem;
+      color: var(--ink-muted);
+      text-align: right;
+      line-height: 1.8;
+    }
+
+    .masthead-nav {
+      display: flex;
+      gap: 0;
+      padding: 0;
+    }
+
+    .nav-tab {
+      font-family: var(--sans);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.9rem 1.5rem;
+      cursor: pointer;
+      border: none;
+      background: none;
+      color: var(--ink-muted);
+      border-bottom: 2px solid transparent;
+      transition: all 0.15s;
+    }
+
+    .nav-tab:hover { color: var(--ink); }
+    .nav-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+    /* LAYOUT */
+    main { max-width: 1140px; margin: 0 auto; padding: 3rem 2rem; }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-header h2 {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    .section-header span {
+      font-size: 0.75rem;
+      color: var(--ink-muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* FEATURED */
+    .featured-grid {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 4rem;
+    }
+
+    .card {
+      background: var(--paper-card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: box-shadow 0.2s, transform 0.2s;
+      text-decoration: none;
+      display: block;
+      color: inherit;
+    }
+
+    .card:hover {
+      box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+      transform: translateY(-2px);
+    }
+
+    .card-thumb {
+      width: 100%;
+      aspect-ratio: 3/2;
+      background: var(--accent-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-thumb canvas { width: 100%; height: 100%; object-fit: cover; }
+
+    .thumb-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      opacity: 0.4;
+    }
+
+    .thumb-placeholder svg { width: 36px; height: 36px; }
+    .thumb-placeholder span { font-size: 0.75rem; letter-spacing: 0.05em; text-transform: uppercase; }
+
+    .card-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 2px;
+    }
+
+    .card-body { padding: 1.25rem; }
+
+    .card-issue {
+      font-size: 0.7rem;
+      color: var(--ink-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+
+    .card-title {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      font-weight: 600;
+      line-height: 1.35;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-desc {
+      font-size: 0.82rem;
+      color: var(--ink-muted);
+      line-height: 1.6;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1.25rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      color: var(--ink-muted);
+    }
+
+    .read-link {
+      color: var(--accent);
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* GRID */
+    .pub-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 4rem;
+    }
+
+    .pub-grid .card-thumb { aspect-ratio: 3/4; }
+    .pub-grid .card-title { font-size: 0.95rem; }
+
+    /* EMPTY STATE */
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--ink-muted);
+    }
+
+    .empty-state h3 {
+      font-family: var(--serif);
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+      color: var(--ink);
+    }
+
+    .empty-state p { font-size: 0.85rem; line-height: 1.6; }
+
+    /* TABS */
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* RULE DIVIDER */
+    .divider {
+      text-align: center;
+      position: relative;
+      margin: 3rem 0 2rem;
+    }
+
+    .divider::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .divider span {
+      position: relative;
+      background: var(--paper);
+      padding: 0 1rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      background: var(--paper-card);
+      padding: 2rem;
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--ink-muted);
+      line-height: 2;
+    }
+
+    footer strong { color: var(--ink); }
+
+    @media (max-width: 700px) {
+      .featured-grid { grid-template-columns: 1fr; }
+      .masthead-meta { display: none; }
+      .nav-tab { padding: 0.9rem 1rem; font-size: 0.72rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="masthead-top">
+    <div class="masthead-logo">
+      <div class="logo-mark"><span>D</span></div>
+      <div class="logo-text">
+        <h1>DoMS Publications</h1>
+        <p>Department of Management Studies · NIT Trichy</p>
+      </div>
+    </div>
+    <div class="masthead-meta">
+      <div id="current-date"></div>
+      <div>National Institute of Technology, Tiruchirappalli</div>
+    </div>
+  </div>
+  <nav class="masthead-nav">
+    <button class="nav-tab active" onclick="showTab('magazines')">Magazines</button>
+    <button class="nav-tab" onclick="showTab('newsletters')">Newsletters</button>
+    <button class="nav-tab" onclick="showTab('all')">All Issues</button>
+  </nav>
+</header>
+
+<main>
+
+  <!-- MAGAZINES TAB -->
+  <div class="tab-content active" id="tab-magazines">
+    <div class="section-header">
+      <h2>Magazines</h2>
+      <span>Quarterly · Annual publication</span>
+    </div>
+
+    <div class="featured-grid" id="featured-magazine-grid">
+      <!-- Latest magazine featured large -->
+    </div>
+
+    <div class="divider"><span>All issues</span></div>
+
+    <div class="pub-grid" id="magazine-grid">
+      <!-- All magazines -->
+    </div>
+  </div>
+
+  <!-- NEWSLETTERS TAB -->
+  <div class="tab-content" id="tab-newsletters">
+    <div class="section-header">
+      <h2>Newsletters</h2>
+      <span>Bi-monthly · 6 issues per year</span>
+    </div>
+    <div class="pub-grid" id="newsletter-grid">
+      <!-- All newsletters -->
+    </div>
+  </div>
+
+  <!-- ALL TAB -->
+  <div class="tab-content" id="tab-all">
+    <div class="section-header">
+      <h2>All Publications</h2>
+      <span id="all-count"></span>
+    </div>
+    <div class="pub-grid" id="all-grid">
+      <!-- All publications -->
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <strong>Department of Management Studies</strong><br>
+  National Institute of Technology, Tiruchirappalli — 620 015<br>
+  Tamil Nadu, India
+</footer>
+
+<script>
+  // ─── CONFIGURATION ──────────────────────────────────────────────────────────
+  // Edit publications.json to add new issues.
+  // Each entry: { title, type, issue, date, desc, file }
+  // type: "magazine" | "newsletter"
+  // file: path relative to root, e.g. "pdfs/nexus-vol1.pdf"
+  // ─────────────────────────────────────────────────────────────────────────────
+
+  let publications = [];
+
+  async function loadPublications() {
+    try {
+      const res = await fetch('publications.json');
+      publications = await res.json();
+    } catch(e) {
+      publications = [];
+    }
+    renderAll();
+  }
+
+  function makeCard(pub, large = false) {
+    const card = document.createElement('a');
+    card.className = 'card';
+    card.href = `reader.html?file=${encodeURIComponent(pub.file)}&title=${encodeURIComponent(pub.title)}`;
+
+    const isLatest = publications.indexOf(pub) === 0;
+
+    card.innerHTML = `
+      <div class="card-thumb">
+        <div class="thumb-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M19 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2z"/>
+            <path d="M7 7h10M7 11h10M7 15h6"/>
+          </svg>
+          <span>PDF</span>
+        </div>
+        ${isLatest ? '<span class="card-badge">Latest</span>' : ''}
+      </div>
+      <div class="card-body">
+        <div class="card-issue">${pub.type === 'magazine' ? 'Magazine' : 'Newsletter'} · ${pub.issue}</div>
+        <div class="card-title">${pub.title}</div>
+        ${pub.desc ? `<div class="card-desc">${pub.desc}</div>` : ''}
+      </div>
+      <div class="card-footer">
+        <span>${pub.date}</span>
+        <span class="read-link">Read ›</span>
+      </div>
+    `;
+    return card;
+  }
+
+  function renderGrid(containerId, pubs, emptyMsg) {
+    const el = document.getElementById(containerId);
+    el.innerHTML = '';
+    if (!pubs.length) {
+      el.innerHTML = `<div class="empty-state">
+        <h3>No publications yet</h3>
+        <p>${emptyMsg}</p>
+      </div>`;
+      return;
+    }
+    pubs.forEach(p => el.appendChild(makeCard(p)));
+  }
+
+  function renderAll() {
+    const magazines = publications.filter(p => p.type === 'magazine');
+    const newsletters = publications.filter(p => p.type === 'newsletter');
+
+    // Featured magazine (latest, shown large)
+    const featuredEl = document.getElementById('featured-magazine-grid');
+    featuredEl.innerHTML = '';
+    if (magazines.length > 0) {
+      featuredEl.style.display = 'grid';
+      const featured = makeCard(magazines[0], true);
+      featured.style.gridColumn = '1';
+      featuredEl.appendChild(featured);
+
+      if (magazines[1]) {
+        const second = makeCard(magazines[1]);
+        featuredEl.appendChild(second);
+      }
+    } else {
+      featuredEl.style.display = 'none';
+    }
+
+    // Magazine grid (skip first two already in featured)
+    renderGrid('magazine-grid', magazines.slice(2), 'Add PDFs to the pdfs/ folder and update publications.json to see them here.');
+
+    // Newsletters
+    renderGrid('newsletter-grid', newsletters, 'Add newsletters to the pdfs/ folder and update publications.json.');
+
+    // All
+    renderGrid('all-grid', publications, 'No publications added yet. See the README for instructions.');
+    document.getElementById('all-count').textContent = `${publications.length} issue${publications.length !== 1 ? 's' : ''}`;
+  }
+
+  function showTab(name) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  // Date display
+  document.getElementById('current-date').textContent = new Date().toLocaleDateString('en-IN', {
+    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+  });
+
+  loadPublications();
+</script>
+</body>
+</html>
